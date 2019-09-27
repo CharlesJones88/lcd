@@ -2,6 +2,7 @@
 
 const EventEmitter = require('events').EventEmitter;
 const Gpio = require('onoff').Gpio;
+const PiGpio = require('pigpio');
 const mutexify = require('mutexify');
 
 const ROW_OFFSETS = [0x00, 0x40, 0x14, 0x54];
@@ -49,9 +50,9 @@ class Lcd extends EventEmitter {
     this.e = new Gpio(config.e, 'low'); // enable, output, initially low
     this.data = config.data.map(gpioNo => new Gpio(gpioNo, 'low'));
     if (config.red && config.green && config.blue) {
-      this.red = new Gpio(config.red, 'low');
-      this.green = new Gpio(config.green, 'low');
-      this.blue = new Gpio(config.blue, 'low');
+      this.red = new PiGpio(config.red, {mode: PiGpio.OUTPUT});
+      this.green = new PiGpio(config.green, {mode: PiGpio.OUTPUT});
+      this.blue = new PiGpio(config.blue, {mode: PiGpio.OUTPUT});
     }
 
     this.displayControl = 0x0c; // display on, cursor off, cursor blink off
