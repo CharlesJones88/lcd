@@ -48,6 +48,11 @@ class Lcd extends EventEmitter {
     this.rs = new Gpio(config.rs, 'low'); // reg. select, output, initially low
     this.e = new Gpio(config.e, 'low'); // enable, output, initially low
     this.data = config.data.map(gpioNo => new Gpio(gpioNo, 'low'));
+    if (config.red && config.green && config.blue) {
+      this.red = new Gpio(config.red, 'low');
+      this.green = new Gpio(config.green, 'low');
+      this.blue = new Gpio(config.blue, 'low');
+    }
 
     this.displayControl = 0x0c; // display on, cursor off, cursor blink off
     this.displayMode = 0x06; // left to right, no shift
@@ -86,6 +91,14 @@ class Lcd extends EventEmitter {
       return delay(3);     // wait > 1.52ms for display to clear
     })
     .then(_ => this.emit('ready'));
+  }
+
+  setColor(red, green, blue) {
+    if (this.red && this.green && this.blue) {
+      this.red.writeSync(red);
+      this.green.writeSync(green);
+      this.blue.writeSync(blue);
+    }
   }
 
   print(val, cb) {
