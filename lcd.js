@@ -2,7 +2,7 @@
 
 const EventEmitter = require('events').EventEmitter;
 const Gpio = require('onoff').Gpio;
-const PiGpio = require('pigpio');
+const {Gpio: PiGpio} = require('pigpio');
 const mutexify = require('mutexify');
 
 const ROW_OFFSETS = [0x00, 0x40, 0x14, 0x54];
