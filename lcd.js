@@ -96,9 +96,9 @@ class Lcd extends EventEmitter {
 
   setColor(red, green, blue) {
     if (this.red && this.green && this.blue) {
-      this.red.writeSync(red);
-      this.green.writeSync(green);
-      this.blue.writeSync(blue);
+      this.red.pwmWrite(red);
+      this.green.pwmWrite(green);
+      this.blue.pwmWrite(blue);
     }
   }
 
